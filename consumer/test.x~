@@ -1,0 +1,23 @@
+enum divstat{
+	DIV_OK=0,
+	DIV_NOK=1
+};
+
+union resultado switch(divstat status){
+	case DIV_OK:
+		int cociente;
+	default:
+		void;
+};
+
+struct enteros{
+	int dividendo;;
+	int divisor;
+};
+
+program MAT{
+	version MATV{
+		resultado
+		DIVDIR(enteros)=1;
+	}=1;
+}=0x03000000;

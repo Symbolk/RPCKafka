@@ -1,0 +1,79 @@
+/*
+* Kakfa consumer remote API
+* According to the Kafka Java consumer API 0.9.0---the lateset version
+* "Counterpart" indicates the corresponding method in Java consumer API
+* @see  http://kafka.apache.org/090/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html
+*/
+
+/* Maximum number of topics */
+const MAXTOPICNUM=5;
+/* Maximum length of topic names */
+const MAXTOPICNAMELEN=20;
+
+/* Result code for no errors, 0 for Ok */
+/*const RESULT_OK=0;*/
+
+/* A list of topics, variable-length, from one to all */
+typedef string topics<MAXTOPICNUM>;
+
+/* Counterpart : public PartitionInfo(java.lang.String topic, int partition,Node leader,Node[] replicas,Node[] inSyncReplicas)*/
+struct partitionInfo{
+	string topic<MAXTOPICNAMELEN>;
+	int partitionId;
+	int leaderBrokerId;
+	/* int replicasIds[MAXTOPICNUM-1]; */
+	partititionInfo *nextPartitionInfo;
+};
+
+enum result{
+	RESULT_OK=0,
+	RESULT_NO_OK=1
+};
+
+/* Result for the partitionsFor(java.lang.String topic) */
+union partitionInfoRes switch(result resno){
+	case RESULT_OK:
+		struct{
+			partitionInfo *partitionInfos;
+			bool eof;
+		}partitionInfoOk;
+	default :
+		void;
+};
+
+/* Counerpart : public ConsumerRecord(java.lang.String topic, int partition,long offset,K key,V value) */
+struct consumerRecord{
+	string topic;
+	int partitionId;
+	hyper int offset;
+	string key;
+	int value;	
+	consumerRecord *nextConsumerRecord;
+};
+/8 Result for the poll() */
+union consumerRecordRes switch(result resno){
+	switch RESULT_OK:
+		struct{
+			consumerRecord *consumerRecords;
+			bool eof;
+		}consumerRecordOk;
+	default :
+		void;
+}
+
+
+program CONSUMER{
+	version CONSUMERVERS{
+
+
+		/** 	
+		* Get the partition metadata for the give topic.
+		* Counterpart : java.util.List<PartitionInfo>	partitionsFor(java.lang.String topic)
+		* @params string topic name
+		* @return  a linked list of partitionInfo
+		*/
+		 partitionInfoRes partitionsFor(string)=1;
+
+		
+	}=1;
+}=0x20000002;

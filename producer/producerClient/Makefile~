@@ -1,0 +1,13 @@
+objects = producer 
+
+all : $(objects)
+
+producer : producer.c producer_clnt.c producer_xdr.c producer.h
+	gcc producer.c producer_clnt.c producer_xdr.c -o producer -lnsl
+
+run :
+	java -cp '.:oncrpc.jar' producerServer
+	./producer host Topic Record
+	
+clean : 
+	rm ./producer

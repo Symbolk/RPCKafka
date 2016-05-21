@@ -1,0 +1,12 @@
+objects = producerServer.class 
+
+all : $(objects)
+
+producerServer.class : producerServer.java producerServerStub.java producer.java
+	javac -cp '.kafka-clients-0.9.0.0.jar:oncrpc.jar' producerServer.java
+
+run :
+	java -cp '.:oncrpc.jar' producerServer
+	
+clean : 
+	rm *.class 

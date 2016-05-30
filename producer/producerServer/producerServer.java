@@ -19,14 +19,14 @@ public class producerServer extends producerServerStub {
     	return res;
 	}
 
-	public void send_1(String arg1, String arg2, int arg3){
+	public void send_1(String arg1, String arg2, String arg3){
 		//get a bunch of data
 		//divide them into 3 groups
 		System.out.println("topic="+arg1+"key="+arg2+"value="+arg3);
 		//producer.send(new ProducerRecord<String, Integer>(arg1, arg2, new Integer(arg3)));
 	}
 
-	public call_result sendWithAck_1(String arg1, String arg2, int arg3){
+	public call_result sendWithAck_1(String arg1, String arg2, String arg3){
 		call_result res=new call_result();
 		res.error=0;
 		return res;
@@ -41,7 +41,7 @@ public class producerServer extends producerServerStub {
 		//producer.close();
 	}
 
-	public void closeLater_1(long arg1){
+	public void closeAfter_1(long arg1){
 		//producer.close(arg1,TimeUnit.MILLISECONDS);
 	}
 

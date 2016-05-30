@@ -47,9 +47,9 @@ _close_1 (void  *argp, struct svc_req *rqstp)
 }
 
 static void *
-_closelater_1 (quad_t  *argp, struct svc_req *rqstp)
+_closeafter_1 (quad_t  *argp, struct svc_req *rqstp)
 {
-	return (closelater_1_svc(*argp, rqstp));
+	return (closeafter_1_svc(*argp, rqstp));
 }
 
 static void
@@ -58,7 +58,7 @@ producer_1(struct svc_req *rqstp, register SVCXPRT *transp)
 	union {
 		send_1_argument send_1_arg;
 		sendwithack_1_argument sendwithack_1_arg;
-		quad_t closelater_1_arg;
+		quad_t closeafter_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -99,10 +99,10 @@ producer_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		local = (char *(*)(char *, struct svc_req *)) _close_1;
 		break;
 
-	case closeLater:
+	case closeAfter:
 		_xdr_argument = (xdrproc_t) xdr_quad_t;
 		_xdr_result = (xdrproc_t) xdr_void;
-		local = (char *(*)(char *, struct svc_req *)) _closelater_1;
+		local = (char *(*)(char *, struct svc_req *)) _closeafter_1;
 		break;
 
 	default:

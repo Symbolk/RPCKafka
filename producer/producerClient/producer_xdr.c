@@ -30,7 +30,7 @@ xdr_send_1_argument (XDR *xdrs, send_1_argument *objp)
 		 return FALSE;
 	 if (!xdr_string (xdrs, &objp->arg2, ~0))
 		 return FALSE;
-	 if (!xdr_int (xdrs, &objp->arg3))
+	 if (!xdr_string (xdrs, &objp->arg3, ~0))
 		 return FALSE;
 	return TRUE;
 }
@@ -42,7 +42,7 @@ xdr_sendwithack_1_argument (XDR *xdrs, sendwithack_1_argument *objp)
 		 return FALSE;
 	 if (!xdr_string (xdrs, &objp->arg2, ~0))
 		 return FALSE;
-	 if (!xdr_int (xdrs, &objp->arg3))
+	 if (!xdr_string (xdrs, &objp->arg3, ~0))
 		 return FALSE;
 	return TRUE;
 }

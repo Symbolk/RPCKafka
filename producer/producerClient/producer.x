@@ -4,7 +4,7 @@
 * "Counterpart" indicates the corresponding method in Java producer API
 * @see  http://kafka.apache.org/090/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html
 * @author Bo Shen
-* @date 20160407
+* @date 20160601
 */
 
 /*
@@ -33,17 +33,17 @@ program PRODUCER{
 		* Sends one single data to one single topic, partitioned by key
 		* Counterpart : java.util.concurrent.Future<RecordMetadata>	send(ProducerRecord<K,V> record)
 		* If topic exists, append; if not, new one
-		* @params string topic, string key, int value(0-1023)
+		* @params string topic, string key, string timestamp+value(0-1023)
 		*/
-		void send(string, string, int)=2;
+		void send(string, string, string)=2;
 
 		/**
 		* Asynchronously send a record to a topic and return a bool value  
 		* Counterpart : java.util.concurrent.Future<RecordMetadata>	send(ProducerRecord<K,V> record, Callback callback)
-		* @params string topic, string key, int value(0-1023)
+		* @params string topic, string key, string timestamp+value(0-1023)
 		* @return the result 
 		*/
-		call_result sendWithAck(string, string, int)=3;
+		call_result sendWithAck(string, string, string)=3;
 
 		/* 2, Procedures for flushing and closing */
 		/**
@@ -64,6 +64,6 @@ program PRODUCER{
 		* Counterpart : void	close(long timeout, java.util.concurrent.TimeUnit timeUnit)
 		* @params long timeout, with the default timeUnit is ms
 		*/
-		void closeLater(hyper int)=6;
+		void closeAfter(hyper int)=6;
 	}=1;
 }=0x20000001;

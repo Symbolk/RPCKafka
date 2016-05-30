@@ -25,14 +25,14 @@ typedef struct call_result call_result;
 struct send_1_argument {
 	char *arg1;
 	char *arg2;
-	int arg3;
+	char *arg3;
 };
 typedef struct send_1_argument send_1_argument;
 
 struct sendwithack_1_argument {
 	char *arg1;
 	char *arg2;
-	int arg3;
+	char *arg3;
 };
 typedef struct sendwithack_1_argument sendwithack_1_argument;
 
@@ -44,20 +44,20 @@ typedef struct sendwithack_1_argument sendwithack_1_argument;
 extern  call_result * connect_1(CLIENT *);
 extern  call_result * connect_1_svc(struct svc_req *);
 #define send 2
-extern  void * send_1(char *, char *, int , CLIENT *);
-extern  void * send_1_svc(char *, char *, int , struct svc_req *);
+extern  void * send_1(char *, char *, char *, CLIENT *);
+extern  void * send_1_svc(char *, char *, char *, struct svc_req *);
 #define sendWithAck 3
-extern  call_result * sendwithack_1(char *, char *, int , CLIENT *);
-extern  call_result * sendwithack_1_svc(char *, char *, int , struct svc_req *);
+extern  call_result * sendwithack_1(char *, char *, char *, CLIENT *);
+extern  call_result * sendwithack_1_svc(char *, char *, char *, struct svc_req *);
 #define flush 4
 extern  void * flush_1(CLIENT *);
 extern  void * flush_1_svc(struct svc_req *);
 #define close 5
 extern  void * close_1(CLIENT *);
 extern  void * close_1_svc(struct svc_req *);
-#define closeLater 6
-extern  void * closelater_1(quad_t , CLIENT *);
-extern  void * closelater_1_svc(quad_t , struct svc_req *);
+#define closeAfter 6
+extern  void * closeafter_1(quad_t , CLIENT *);
+extern  void * closeafter_1_svc(quad_t , struct svc_req *);
 extern int producer_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
@@ -76,9 +76,9 @@ extern  void * flush_1_svc();
 #define close 5
 extern  void * close_1();
 extern  void * close_1_svc();
-#define closeLater 6
-extern  void * closelater_1();
-extern  void * closelater_1_svc();
+#define closeAfter 6
+extern  void * closeafter_1();
+extern  void * closeafter_1_svc();
 extern int producer_1_freeresult ();
 #endif /* K&R C */
 

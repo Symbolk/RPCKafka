@@ -24,7 +24,7 @@ connect_1(CLIENT *clnt)
 }
 
 void *
-send_1(char *arg1, char *arg2, int arg3,  CLIENT *clnt)
+send_1(char *arg1, char *arg2, char *arg3,  CLIENT *clnt)
 {
 	send_1_argument arg;
 	static char clnt_res;
@@ -42,7 +42,7 @@ send_1(char *arg1, char *arg2, int arg3,  CLIENT *clnt)
 }
 
 call_result *
-sendwithack_1(char *arg1, char *arg2, int arg3,  CLIENT *clnt)
+sendwithack_1(char *arg1, char *arg2, char *arg3,  CLIENT *clnt)
 {
 	sendwithack_1_argument arg;
 	static call_result clnt_res;
@@ -88,12 +88,12 @@ close_1(CLIENT *clnt)
 }
 
 void *
-closelater_1(quad_t arg1,  CLIENT *clnt)
+closeafter_1(quad_t arg1,  CLIENT *clnt)
 {
 	static char clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call (clnt, closeLater,
+	if (clnt_call (clnt, closeAfter,
 		(xdrproc_t) xdr_quad_t, (caddr_t) &arg1,
 		(xdrproc_t) xdr_void, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {

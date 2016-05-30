@@ -7,10 +7,10 @@ int main(int argc, char* argv[]){
 	call_result *result;
 	//get info from console
 	char *server="localhost";
-	char *topic="Light";
+	char *topic="holder4";
 
-	char* key="20160520";
-	int value=1300;
+	char* key="sensor5";
+	char* value="1300";
 	//create a client handle using the info
 	clnt = clnt_create(server, PRODUCER, PRODUCERVERS, "TCP");
 	printf("CProducer started\n");

@@ -3,6 +3,9 @@
 * According to the Kafka Java consumer API 0.9.0---the lateset version
 * "Counterpart" indicates the corresponding method in Java consumer API
 * @see  http://kafka.apache.org/090/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html
+* @author Bo Shen
+* @date 201601
+* @version 3.2
 */
 
 /* Maximum length of topic names */

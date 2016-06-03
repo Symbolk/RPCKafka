@@ -17,7 +17,7 @@ extern "C" {
 struct call_result {
 	int error;
 	union {
-		int errno;
+		int errid;
 	} call_result_u;
 };
 typedef struct call_result call_result;

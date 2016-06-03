@@ -33,14 +33,14 @@ program PRODUCER{
 		* Sends one single data to one single topic, partitioned by key
 		* Counterpart : java.util.concurrent.Future<RecordMetadata>	send(ProducerRecord<K,V> record)
 		* If topic exists, append; if not, new one
-		* @params string topic=sensor name, string key=timestamp(eg. 2016-06-01 12:30:23), string value(0-1023)
+		* @params string topic=sensorname, string key=timestamp(eg. 2016-06-01 12:30:23), string value(0-1023)
 		*/
 		void send(string, string, string)=2;
 
 		/**
 		* Asynchronously send a record to a topic and return a bool value  
 		* Counterpart : java.util.concurrent.Future<RecordMetadata>	send(ProducerRecord<K,V> record, Callback callback)
-		* @params string topic=sensor name, string key=timestamp(eg. 2016-06-01 12:30:23), string value(0-1023)
+		* @params string topic=sensorname, string key=timestamp(eg. 2016-06-01 12:30:23), string value(0-1023)
 		* @return the result 
 		*/
 		call_result sendWithAck(string, string, string)=3;

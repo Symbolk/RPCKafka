@@ -4,17 +4,18 @@
 * "Counterpart" indicates the corresponding method in Java producer API
 * @see  http://kafka.apache.org/090/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html
 * @author Bo Shen
-* @date 20160601
+* @date 20160603
+* @version 3.3
 */
 
 /*
 * The result of the send requiring acknowledgements
-* error==0 : no error; error == -1 : error with errno 
+* error==0 : no error; error == -1 : error with errid
 */
 
 union call_result switch(int error){
 	case -1: 
-		int errno;
+		int errid;
 	default: /*0*/
 		void;
 };

@@ -28,7 +28,7 @@ public class producerServer extends producerServerStub {
 	 */
 	public producerServer() throws OncRpcException, IOException {
 		super();
-		props.put("bootstrap.servers", "138.100.155.79:9092,138.100.155.80:9092,138.100.155.81:19092");
+		props.put("bootstrap.servers", "138.100.155.79:9092,138.100.155.80:9092,138.100.155.81:9092");
    	 	props.put("acks", "all");
    	 	props.put("retries", 0);
    	 	props.put("batch.size", 16384);

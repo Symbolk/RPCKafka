@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "producer.h"
 
 int main(int argc, char* argv[]){
@@ -7,10 +8,29 @@ int main(int argc, char* argv[]){
 	call_result *result;
 	//get info from console
 	char *server="localhost";
-	char *topic="light";
+	char *topic="testlight";
 
-	char* key="2015-06-01 12:23:30";
-	char* value="1300";
+	char* key="";
+	char* value="";
+	char* delim=",";
+	char* raw="1569,2015-06-01 12:23:30";
+	char lvalue[25];
+	int n=sprintf(lvalue,"%s",raw);
+	char* p=strtok(lvalue,delim);
+	//The id of params
+	int count = 0;
+	while(p!=NULL){
+		count++;
+		if(count==1){
+			value=p;
+		}
+		if(count==2){
+			key=p;
+		}
+		p=strtok(NULL,delim);
+		
+	}
+	printf("%d   %s:%s\n",n,key,value);
 	//create a client handle using the info
 	clnt = clnt_create(server, PRODUCER, PRODUCERVERS, "TCP");
 	printf("CProducer started\n");

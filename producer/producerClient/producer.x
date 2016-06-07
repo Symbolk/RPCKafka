@@ -4,8 +4,8 @@
 * "Counterpart" indicates the corresponding method in Java producer API
 * @see  http://kafka.apache.org/090/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html
 * @author Bo Shen
-* @date 20160603
-* @version 3.3
+* @date 20160606
+* @version 3.4
 */
 
 /*
@@ -24,7 +24,7 @@ program PRODUCER{
 	version PRODUCERVERS{
 		/* 1, Procedures for produce records */
 		/**
-		* New a producer client and (ask the Linux Server to new a producer to)connect the Kafka
+		* New a producer client and connect the Kafka Cluster
 		* Counterpart : Constructor()
 		* @params ...
 		*/
@@ -32,16 +32,20 @@ program PRODUCER{
 
 		/**
 		* Sends one single data to one single topic, partitioned by key
-		* Counterpart : java.util.concurrent.Future<RecordMetadata>	send(ProducerRecord<K,V> record)
-		* If topic exists, append; if not, new one
-		* @params string topic=sensorname, string key=timestamp(eg. 2016-06-01 12:30:23), string value(0-1023)
+		* Counterpart : java.util.concurrent.Future<RecordMetadata> send(ProducerRecord<K,V> record)
+		* If topic exists, append; if not, create one
+		* @params string topic=sensorname
+		* @params string key=timestamp(eg. 2016-06-01 12:30:23)
+		* @params string value(0-1023)
 		*/
 		void send(string, string, string)=2;
 
 		/**
 		* Asynchronously send a record to a topic and return a bool value  
-		* Counterpart : java.util.concurrent.Future<RecordMetadata>	send(ProducerRecord<K,V> record, Callback callback)
-		* @params string topic=sensorname, string key=timestamp(eg. 2016-06-01 12:30:23), string value(0-1023)
+		* Counterpart : java.util.concurrent.Future<RecordMetadata> send(ProducerRecord<K,V> record, Callback callback)
+		* @params string topic=sensorname
+		* @params string key=timestamp(eg. 2016-06-01 12:30:23)
+		* @params string value(0-1023)
 		* @return the result 
 		*/
 		call_result sendWithAck(string, string, string)=3;

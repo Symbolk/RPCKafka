@@ -16,6 +16,12 @@
 #define SIG_PF void(*)(int)
 #endif
 
+static call_result *
+_connect_1 (void  *argp, struct svc_req *rqstp)
+{
+	return (connect_1_svc(rqstp));
+}
+
 static void *
 _subscribe_1 (topics  *argp, struct svc_req *rqstp)
 {
@@ -96,6 +102,12 @@ consumer_1(struct svc_req *rqstp, register SVCXPRT *transp)
 	case NULLPROC:
 		(void) svc_sendreply (transp, (xdrproc_t) xdr_void, (char *)NULL);
 		return;
+
+	case connect:
+		_xdr_argument = (xdrproc_t) xdr_void;
+		_xdr_result = (xdrproc_t) xdr_call_result;
+		local = (char *(*)(char *, struct svc_req *)) _connect_1;
+		break;
 
 	case subscribe:
 		_xdr_argument = (xdrproc_t) xdr_topics;

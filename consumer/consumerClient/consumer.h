@@ -16,6 +16,14 @@ extern "C" {
 #define MAXTOPICNAMELEN 20
 #define MAXKEYLEN 10
 
+struct call_result {
+	int error;
+	union {
+		int errid;
+	} call_result_u;
+};
+typedef struct call_result call_result;
+
 typedef char *topics;
 
 struct partitionInfo {
@@ -69,67 +77,73 @@ typedef struct seektoend_1_argument seektoend_1_argument;
 #define CONSUMERVERS 1
 
 #if defined(__STDC__) || defined(__cplusplus)
-#define subscribe 1
+#define connect 1
+extern  call_result * connect_1(CLIENT *);
+extern  call_result * connect_1_svc(struct svc_req *);
+#define subscribe 2
 extern  void * subscribe_1(topics , CLIENT *);
 extern  void * subscribe_1_svc(topics , struct svc_req *);
-#define unsubscribe 2
+#define unsubscribe 3
 extern  void * unsubscribe_1(CLIENT *);
 extern  void * unsubscribe_1_svc(struct svc_req *);
-#define subscription 3
+#define subscription 4
 extern  topics * subscription_1(CLIENT *);
 extern  topics * subscription_1_svc(struct svc_req *);
-#define partitionsFor 4
+#define partitionsFor 5
 extern  partitionInfoList * partitionsfor_1(char *, CLIENT *);
 extern  partitionInfoList * partitionsfor_1_svc(char *, struct svc_req *);
-#define poll 5
+#define poll 6
 extern  consumerRecordList * poll_1(quad_t , CLIENT *);
 extern  consumerRecordList * poll_1_svc(quad_t , struct svc_req *);
-#define position 6
+#define position 7
 extern  quad_t * position_1(char *, int , CLIENT *);
 extern  quad_t * position_1_svc(char *, int , struct svc_req *);
-#define seek 7
+#define seek 8
 extern  void * seek_1(char *, int , quad_t , CLIENT *);
 extern  void * seek_1_svc(char *, int , quad_t , struct svc_req *);
-#define seekToBeginning 8
+#define seekToBeginning 9
 extern  void * seektobeginning_1(char *, int , CLIENT *);
 extern  void * seektobeginning_1_svc(char *, int , struct svc_req *);
-#define seekToEnd 9
+#define seekToEnd 10
 extern  void * seektoend_1(char *, int , CLIENT *);
 extern  void * seektoend_1_svc(char *, int , struct svc_req *);
-#define close 10
+#define close 11
 extern  void * close_1(CLIENT *);
 extern  void * close_1_svc(struct svc_req *);
 extern int consumer_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
-#define subscribe 1
+#define connect 1
+extern  call_result * connect_1();
+extern  call_result * connect_1_svc();
+#define subscribe 2
 extern  void * subscribe_1();
 extern  void * subscribe_1_svc();
-#define unsubscribe 2
+#define unsubscribe 3
 extern  void * unsubscribe_1();
 extern  void * unsubscribe_1_svc();
-#define subscription 3
+#define subscription 4
 extern  topics * subscription_1();
 extern  topics * subscription_1_svc();
-#define partitionsFor 4
+#define partitionsFor 5
 extern  partitionInfoList * partitionsfor_1();
 extern  partitionInfoList * partitionsfor_1_svc();
-#define poll 5
+#define poll 6
 extern  consumerRecordList * poll_1();
 extern  consumerRecordList * poll_1_svc();
-#define position 6
+#define position 7
 extern  quad_t * position_1();
 extern  quad_t * position_1_svc();
-#define seek 7
+#define seek 8
 extern  void * seek_1();
 extern  void * seek_1_svc();
-#define seekToBeginning 8
+#define seekToBeginning 9
 extern  void * seektobeginning_1();
 extern  void * seektobeginning_1_svc();
-#define seekToEnd 9
+#define seekToEnd 10
 extern  void * seektoend_1();
 extern  void * seektoend_1_svc();
-#define close 10
+#define close 11
 extern  void * close_1();
 extern  void * close_1_svc();
 extern int consumer_1_freeresult ();
@@ -138,6 +152,7 @@ extern int consumer_1_freeresult ();
 /* the xdr functions */
 
 #if defined(__STDC__) || defined(__cplusplus)
+extern  bool_t xdr_call_result (XDR *, call_result*);
 extern  bool_t xdr_topics (XDR *, topics*);
 extern  bool_t xdr_partitionInfo (XDR *, partitionInfo*);
 extern  bool_t xdr_partitionInfoList (XDR *, partitionInfoList*);
@@ -149,6 +164,7 @@ extern  bool_t xdr_seektobeginning_1_argument (XDR *, seektobeginning_1_argument
 extern  bool_t xdr_seektoend_1_argument (XDR *, seektoend_1_argument*);
 
 #else /* K&R C */
+extern bool_t xdr_call_result ();
 extern bool_t xdr_topics ();
 extern bool_t xdr_partitionInfo ();
 extern bool_t xdr_partitionInfoList ();

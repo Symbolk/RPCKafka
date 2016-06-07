@@ -6,6 +6,24 @@
 #include "consumer.h"
 
 bool_t
+xdr_call_result (XDR *xdrs, call_result *objp)
+{
+	register int32_t *buf;
+
+	 if (!xdr_int (xdrs, &objp->error))
+		 return FALSE;
+	switch (objp->error) {
+	case -1:
+		 if (!xdr_int (xdrs, &objp->call_result_u.errid))
+			 return FALSE;
+		break;
+	default:
+		break;
+	}
+	return TRUE;
+}
+
+bool_t
 xdr_topics (XDR *xdrs, topics *objp)
 {
 	register int32_t *buf;

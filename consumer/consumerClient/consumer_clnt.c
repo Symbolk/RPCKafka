@@ -9,6 +9,20 @@
 /* Default timeout can be changed using clnt_control() */
 static struct timeval TIMEOUT = { 25, 0 };
 
+call_result *
+connect_1(CLIENT *clnt)
+{
+	static call_result clnt_res;
+
+	memset((char *)&clnt_res, 0, sizeof(clnt_res));
+	 if (clnt_call (clnt, connect, (xdrproc_t) xdr_void, (caddr_t) NULL,
+		(xdrproc_t) xdr_call_result, (caddr_t) &clnt_res,
+		TIMEOUT) != RPC_SUCCESS) {
+		return (NULL);
+	}
+	return (&clnt_res);
+}
+
 void *
 subscribe_1(topics arg1,  CLIENT *clnt)
 {

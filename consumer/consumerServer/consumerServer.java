@@ -5,15 +5,33 @@ import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
-/*import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-*/
+
+
+/**
+ * RPC server for kafka consumer
+ * 
+ * @author symbolk
+ * @version 3.2
+ * @since 20160301
+ */
 public class consumerServer extends consumerServerStub {
 
-	//private static KafkaConsumer<String, Integer> consumer;
+	/** The global producer object */
+    private static KafkaConsumer<String, Integer> consumer;
+    /** The properties/configuration object */
+    private static Properties props = new Properties();
+
+    /**
+     * Config a producer
+     * 
+     * @throws OncRpcException
+     * @throws IOException
+     */
 	public consumerServer() throws OncRpcException, IOException {
-/*		Properties props = new Properties();
+		Properties props = new Properties();
 	    props.put("bootstrap.servers", "192.168.60.120:9092");
 	    props.put("group.id", "test");
 	    props.put("enable.auto.commit", "true");
@@ -21,10 +39,30 @@ public class consumerServer extends consumerServerStub {
 	    props.put("session.timeout.ms", "30000");
 	    props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 	    props.put("value.deserializer", "org.apache.kafka.common.serialization.IntegerDeserializer");
-    	consumer = new KafkaConsumer<String, Integer>(props);*/
 		super();
 	}
 
+    /**
+     * Connect to cluster
+     * 
+     * @return call_result, 0 is no error(all ok)
+     */
+    @Override
+    public call_result connect_1(){
+        // create a producer
+        System.out.println("Kafka Connecting...");
+        call_result res=new call_result();
+        consumer = new KafkaConsumer<String, Integer>(props);;
+        res.error=0;
+        System.out.println("Kafka Connected.");
+        return res;
+    }
+
+    /**
+     * Subscribe to a list of topics
+     *
+     * @param a string of topic names concated by +
+     */
 	@Override
 	public void subscribe_1(topics ts){
     	//Q1: how to pass a list of topics == ok
@@ -37,10 +75,19 @@ public class consumerServer extends consumerServerStub {
 		System.out.println(topiclist);
 	}
 	
+    /**
+     * Unsubscribe the current topics
+     *
+     */
     public void unsubscribe_1(){
-    	//consumer.unsubscribe();
+    	consumer.unsubscribe();
     }
 
+    /**
+     * Get the current topics names
+     *
+     * @return a string of topic names
+     */
     public topics subscription_1(){
     	//Q2: how to return a class which can be parsed by C
     	// ArrayList<String> subtopics=consumer.subscription();//downcasting
@@ -54,6 +101,12 @@ public class consumerServer extends consumerServerStub {
     	return result;
     }
 
+    /**
+     * Get the partition infos of a topic
+     *
+     * @param topic name
+     * @return a list of partition infos
+     */
     public partitionInfoList partitionsFor_1(String topic){
     	//Q3: how to return partitionInfo crossing langs
     	partitionInfoList pil=new partitionInfoList();
@@ -61,6 +114,12 @@ public class consumerServer extends consumerServerStub {
     	return pil;
     }
 
+     /**
+     * Consume records from the topic
+     *
+     * @param time period to poll records
+     * @return a list of records consumed
+     */
     public consumerRecordList poll_1(long timeout){
     	consumerRecordList crl=new consumerRecordList();
     	consumerRecord cr=new consumerRecord();
@@ -87,39 +146,69 @@ public class consumerServer extends consumerServerStub {
     	return crl;
     }
 
+    /**
+     * Get the current offset in one partition of a topic
+     *
+     * @param topic topicname
+     * @param pid partition id
+     * @return offset 
+     */
     public long position_1(String topic, int pid){
- 		// long position=consumer.position(new TopicPartition(topic,pid));
+ 		long position=consumer.position(new TopicPartition(topic,pid));
     	return position;
     }
 
+    /**
+     * Set the current offset to one specific position in one partition of a topic
+     *
+     * @param topic topicname
+     * @param pid partition id
+     * @param offset position
+     * @return offset 
+     */
     public void seek_1(String topic, int pid, long offset){
-    	// consumer.seek(new TopicPartition(topic,pid),long offset);
+    	consumer.seek(new TopicPartition(topic,pid),long offset);
     }
 
+    /**
+     * Set the current offset to the beginning of one partition of a topic
+     *
+     * @param topic topicname
+     * @param pid partition id
+     */
     public void seekToBeginning_1(String topic, int pid){
-    	// consumer.seekToBeginning(new TopicPartition(topic,pid));
+    	consumer.seekToBeginning(new TopicPartition(topic,pid));
     }
 
+    /**
+     * Set the current offset to the end of one partition of a topic
+     *
+     * @param topic topicname
+     * @param pid partition id
+     */
     public void seekToEnd_1(String topic, int pid){
-    	// consumer.seekToEnd(new TopicPartition(topic,pid));
+    	consumer.seekToEnd(new TopicPartition(topic,pid));
     }
 
+    /**
+     * Close the consumer by hand now
+     */
 	public void close_1() {
-		//consumer.close();
+		consumer.close();
 	}
 
 	/**
-	 *
+	 * Main method
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		try {
 			consumerServer server = new consumerServer();
-			System.out.println("Server Started");
+			System.out.println("Consumer Server Started");
 			server.run();
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 		}
-		System.out.println("Server stopped.");
+		System.out.println("Consumer Server Stopped.");
 	}
 }

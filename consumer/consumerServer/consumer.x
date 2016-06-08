@@ -4,8 +4,8 @@
 * "Counterpart" indicates the corresponding method in Java consumer API
 * @see  http://kafka.apache.org/090/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html
 * @author Bo Shen
-* @date 201606
-* @version 3.4
+* @date 201608
+* @version 3.5
 */
 
 /* Maximum length of topic names */
@@ -19,7 +19,7 @@ const MAXKEYLEN=10;
 * error==0 : no error; error == -1 : error with errid
 */
 
-union call_result switch(int error){
+union call_result1 switch(int error){
 	case -1: 
 		int errid;
 	default: /*0*/
@@ -58,7 +58,7 @@ program CONSUMER{
 		* New a consumer client and connect the Kafka
 		* Counterpart : Constructor()
 		*/
-		call_result connect(void)=1;
+		call_result1 connect(void)=1;
 	
 		/**
 		* Subscribe to the given list of topics to get dynamically assigned partitions.

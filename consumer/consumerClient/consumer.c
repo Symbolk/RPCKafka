@@ -3,19 +3,13 @@
 
 int main(int argc, char* argv[]){
 	CLIENT *clnt;	
-	//get info from console
-	char *server;
-	char *topic;
-	//for testing
-	/*if(argc!=3){
-		fprintf(stderr, "usage : %s host topic1+topic2+...\n",argv[0]);
-		return -1;	
-	}*/
-	server = argv[1];
-	topic = argv[2];
+	call_result *result;
+	char *server="localhost";
+	char *topic="LightRef";
+
 	//create a client handle using the info
 	clnt = clnt_create(server, CONSUMER, CONSUMERVERS, "TCP");
-	printf("CConsumer started\n");
+	printf("Consumer client started\n");
 	if(clnt==(CLIENT *)NULL){
 		clnt_pcreateerror(server);
 		printf("CConsumer create failed\n");
@@ -23,7 +17,15 @@ int main(int argc, char* argv[]){
 	}
 
 	//call the remote procedure
-	//subscribe_1(topic,clnt);
+	result=connect_1(clnt);
+	//judge the calling result itself
+	if(result==(call_result *)NULL){
+		clnt_perror(clnt, server);
+		printf("Connect to local server failed\n");
+		return -1;
+	}
+	subscribe_1(topic,clnt);
+	
 	printf("%s\n",*subscription_1(clnt));
 
 	clnt_destroy(clnt);

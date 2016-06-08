@@ -32,8 +32,8 @@ public class consumerServer extends consumerServerStub {
      */
 	public consumerServer() throws OncRpcException, IOException {
 		Properties props = new Properties();
-	    props.put("bootstrap.servers", "192.168.60.120:9092");
-	    props.put("group.id", "test");
+	    props.put("bootstrap.servers", "138.100.155.:9092");
+	    props.put("group.id", "Light");
 	    props.put("enable.auto.commit", "true");
 	    props.put("auto.commit.interval.ms", "1000");
 	    props.put("session.timeout.ms", "30000");
@@ -63,16 +63,15 @@ public class consumerServer extends consumerServerStub {
      *
      * @param a string of topic names concated by +
      */
-	@Override
 	public void subscribe_1(topics ts){
     	//Q1: how to pass a list of topics == ok
-    	//consumer.subscribe(Arrays.asList("April15"));
-    	StringTokenizer st=new StringTokenizer(ts.value,"+");
+    	consumer.subscribe(Arrays.asList(ts.value));
+/*    	StringTokenizer st=new StringTokenizer(ts.value,"+");
     	List<String> topiclist=new ArrayList<String>();
     	while(st.hasMoreTokens()){
     		topiclist.add(st.nextToken());
-    	}
-		System.out.println(topiclist);
+    	}*/
+		System.out.println("Subscribing to topic : "+ts.value);
 	}
 	
     /**
@@ -138,7 +137,6 @@ public class consumerServer extends consumerServerStub {
     				if(count==0){
     					crl.value=cr;
     				}
-    				cr.
     			}
     	}catch(Exception e){
     		e.printStackTrace(System.out);

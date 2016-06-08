@@ -6,7 +6,7 @@
 #include "consumer.h"
 
 bool_t
-xdr_call_result (XDR *xdrs, call_result *objp)
+xdr_call_result1 (XDR *xdrs, call_result1 *objp)
 {
 	register int32_t *buf;
 
@@ -14,7 +14,7 @@ xdr_call_result (XDR *xdrs, call_result *objp)
 		 return FALSE;
 	switch (objp->error) {
 	case -1:
-		 if (!xdr_int (xdrs, &objp->call_result_u.errid))
+		 if (!xdr_int (xdrs, &objp->call_result1_u.errid))
 			 return FALSE;
 		break;
 	default:

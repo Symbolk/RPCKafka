@@ -16,13 +16,13 @@ extern "C" {
 #define MAXTOPICNAMELEN 20
 #define MAXKEYLEN 10
 
-struct call_result {
+struct call_result1 {
 	int error;
 	union {
 		int errid;
-	} call_result_u;
+	} call_result1_u;
 };
-typedef struct call_result call_result;
+typedef struct call_result1 call_result1;
 
 typedef char *topics;
 
@@ -78,8 +78,8 @@ typedef struct seektoend_1_argument seektoend_1_argument;
 
 #if defined(__STDC__) || defined(__cplusplus)
 #define connect 1
-extern  call_result * connect_1(CLIENT *);
-extern  call_result * connect_1_svc(struct svc_req *);
+extern  call_result1 * connect_1(CLIENT *);
+extern  call_result1 * connect_1_svc(struct svc_req *);
 #define subscribe 2
 extern  void * subscribe_1(topics , CLIENT *);
 extern  void * subscribe_1_svc(topics , struct svc_req *);
@@ -114,8 +114,8 @@ extern int consumer_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
 #define connect 1
-extern  call_result * connect_1();
-extern  call_result * connect_1_svc();
+extern  call_result1 * connect_1();
+extern  call_result1 * connect_1_svc();
 #define subscribe 2
 extern  void * subscribe_1();
 extern  void * subscribe_1_svc();
@@ -152,7 +152,7 @@ extern int consumer_1_freeresult ();
 /* the xdr functions */
 
 #if defined(__STDC__) || defined(__cplusplus)
-extern  bool_t xdr_call_result (XDR *, call_result*);
+extern  bool_t xdr_call_result1 (XDR *, call_result1*);
 extern  bool_t xdr_topics (XDR *, topics*);
 extern  bool_t xdr_partitionInfo (XDR *, partitionInfo*);
 extern  bool_t xdr_partitionInfoList (XDR *, partitionInfoList*);
@@ -164,7 +164,7 @@ extern  bool_t xdr_seektobeginning_1_argument (XDR *, seektobeginning_1_argument
 extern  bool_t xdr_seektoend_1_argument (XDR *, seektoend_1_argument*);
 
 #else /* K&R C */
-extern bool_t xdr_call_result ();
+extern bool_t xdr_call_result1 ();
 extern bool_t xdr_topics ();
 extern bool_t xdr_partitionInfo ();
 extern bool_t xdr_partitionInfoList ();

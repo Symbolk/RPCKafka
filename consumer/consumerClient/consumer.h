@@ -14,7 +14,8 @@ extern "C" {
 #endif
 
 #define MAXTOPICNAMELEN 20
-#define MAXKEYLEN 10
+#define MAXKEYLEN 255
+#define MAXVALLEN 10
 
 struct call_result1 {
 	int error;
@@ -41,7 +42,7 @@ struct consumerRecord {
 	int partitionId;
 	quad_t offset;
 	char *key;
-	int value;
+	char *value;
 	struct consumerRecord *nextConsumerRecord;
 };
 typedef struct consumerRecord consumerRecord;

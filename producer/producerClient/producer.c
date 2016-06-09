@@ -7,13 +7,13 @@ int main(int argc, char* argv[]){
 	CLIENT *clnt;	
 	call_result *result;
 	//get info from console
-	char *server="localhost";
-	char *topic="testlight";
+	char *server="192.168.1.137";
+	char *topic="testlight2";
 
 	char* key="";
 	char* value="";
 	char* delim=",";
-	char* raw="1569,2015-06-01 12:23:30";
+	char* raw="7889,2015-06-01 12:23:30";
 	char lvalue[25];
 	int n=sprintf(lvalue,"%s",raw);
 	char* p=strtok(lvalue,delim);

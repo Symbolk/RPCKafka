@@ -72,7 +72,7 @@ xdr_consumerRecord (XDR *xdrs, consumerRecord *objp)
 		 return FALSE;
 	 if (!xdr_string (xdrs, &objp->key, MAXKEYLEN))
 		 return FALSE;
-	 if (!xdr_int (xdrs, &objp->value))
+	 if (!xdr_string (xdrs, &objp->value, MAXVALLEN))
 		 return FALSE;
 	 if (!xdr_pointer (xdrs, (char **)&objp->nextConsumerRecord, sizeof (consumerRecord), (xdrproc_t) xdr_consumerRecord))
 		 return FALSE;

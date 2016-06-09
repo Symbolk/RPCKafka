@@ -11,8 +11,9 @@
 /* Maximum length of topic names */
 const MAXTOPICNAMELEN=20;
 /* Maximum length of keys */
-const MAXKEYLEN=10;
-
+const MAXKEYLEN=255;
+/* Maximum length of values */
+const MAXVALLEN=10;
 
 /*
 * The result of the send requiring acknowledgements
@@ -45,7 +46,7 @@ struct consumerRecord{
 	int partitionId;
 	hyper int offset;
 	string key<MAXKEYLEN>;
-	int value;	
+	string value<MAXVALLEN>;	
 	consumerRecord *nextConsumerRecord;
 };
 typedef consumerRecord *consumerRecordList;

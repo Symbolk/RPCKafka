@@ -3,6 +3,9 @@
 * According to the Kafka Java consumer API 0.9.0---the lateset version
 * "Counterpart" indicates the corresponding method in Java consumer API
 * @see  http://kafka.apache.org/090/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html
+* @author Bo Shen
+* @date 201608
+* @version 3.5
 */
 
 /* Maximum length of topic names */
@@ -10,8 +13,18 @@ const MAXTOPICNAMELEN=20;
 /* Maximum length of keys */
 const MAXKEYLEN=10;
 
-/* Result code for no errors, 0 for Ok */
-/*const RESULT_OK=0;*/
+
+/*
+* The result of the send requiring acknowledgements
+* error==0 : no error; error == -1 : error with errid
+*/
+
+union call_result1 switch(int error){
+	case -1: 
+		int errid;
+	default: /*0*/
+		void;
+};
 
 /* A list of topics, variable-length, from one to all */
 typedef string topics<>;
@@ -40,26 +53,32 @@ typedef consumerRecord *consumerRecordList;
 
 program CONSUMER{
 	version CONSUMERVERS{
-		/* 1, Procedures for subscription topics */
+		/* 1, Procedures for consume records */
+		/**
+		* New a consumer client and connect the Kafka
+		* Counterpart : Constructor()
+		*/
+		call_result1 connect(void)=1;
+	
 		/**
 		* Subscribe to the given list of topics to get dynamically assigned partitions.
 		* Counterpart : void	subscribe(java.util.List<java.lang.String> topics)
 		* @params a string array of topic(s) to be subscribed
 		*/
-		void subscribe(topics)=1;
+		void subscribe(topics)=2;
 		
 		/**
 		* Unsubscribe from topics currently subscribed with subscribe(List).
 		* Counterpart : void	unsubscribe()
 		*/
-		void unsubscribe(void)=2;
+		void unsubscribe(void)=3;
 		
 		/**
 		* Get the current subscription.
 		* Counterpart : java.util.Set<java.lang.String>	subscription()
 		* @return a list of topic names being subscribed
 		*/
-		topics subscription(void)=3;
+		topics subscription(void)=4;
 
 		/** 	
 		* Get the partition metadata for the give topic.
@@ -67,7 +86,7 @@ program CONSUMER{
 		* @params string topic name
 		* @return  a linked list of partitionInfo
 		*/
-		partitionInfoList partitionsFor(string)=4;
+		partitionInfoList partitionsFor(string)=5;
 
 		/* 2, Procedures for fetching records */
 		/**
@@ -76,42 +95,47 @@ program CONSUMER{
 		* @params long timeout
 		* @return 
 		*/
-		consumerRecordList poll(hyper int)=5;
+		consumerRecordList poll(hyper int)=6;
 		
 		/* 3, Procedures for controlling positions */
 		/**
 		* Get the offset of the next record that will be fetched (if a record with that offset exists).
 		* Counterpart : long	position(TopicPartition partition)
-		* @params string topic, int partitionId
+		* @params string topic
+		* @params int partitionId
 		*/
-		hyper int position(string, int)=6;
+		hyper int position(string, int)=7;
 
 		/**
-		* Overrides the fetch offsets that the consumer will use on the next poll(timeout). To consumer specific records.
+		* Overrides the fetch offsets that the consumer will use on the next poll(timeout).
 		* Counterpart : void	seek(TopicPartition partition, long offset)
-		* @params string topic, int partitionId, long offset
+		* @params string topic
+		* @params int partitionId
+		* @params long offset
 		*/
-		void seek(string, int, hyper int)=7;
+		void seek(string, int, hyper int)=8;
 
 		/** 
 		* Seek to the first offset for each of the given partitions. To consume from the begining.
 		* Counterpart : void	seekToBeginning(TopicPartition... partitions)
-		* @params  string topic, int partitionId
+		* @params  string topic
+		* @params int partitionId
 		*/
-		void seekToBeginning(string, int)=8;
+		void seekToBeginning(string, int)=9;
 
 		/**
 		* Seek to the last offset for each of the given partitions.
 		* Counterpart : void	seekToEnd(TopicPartition... partitions)
-		* @params  string topic, int partitionId
+		* @params  string topic
+		* @params int partitionId
 		*/
-		void seekToEnd(string, int)=9;
+		void seekToEnd(string, int)=10;
 
 		/* 4, Procedures for closing and cleaning */
 		/**
 		* Close the consumer, waiting indefinitely for any needed cleanup.
 		* Counterpart : void	close()
 		*/
-		void close(void)=10;
+		void close(void)=11;
 	}=1;
 }=0x20000002;
